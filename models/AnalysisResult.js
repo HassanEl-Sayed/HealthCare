@@ -10,12 +10,12 @@ const AnalysisResultSchema = new mongoose.Schema({
     },
     branchId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'BranchesXL'
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'User'
     }
 })

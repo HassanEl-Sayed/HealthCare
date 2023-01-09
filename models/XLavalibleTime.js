@@ -3,28 +3,28 @@ const mongoose = require('mongoose')
 const XLavalibleTimeSchema = new mongoose.Schema({
     day: {
         type: String,
-        // required:true
+        required:true
     },
     timeFrom: {
         type: String,
-        // required:true
+        required:true
     },
     timeTo: {
         type: String,
-        // required:true
+        required:true
     },
     vezeeta:{
         type:Number,
-        // require:true
+        require:true
     },
     branchId: {
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'BranchesXL'
     },
     typeId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Types'
     }
 })

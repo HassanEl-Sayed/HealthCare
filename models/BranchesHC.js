@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken')
 const HCBranchesSchema = new mongoose.Schema({
     name: {
         type: String,
-        // required: true,
+        required: true,
     },
     areaId: {
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Area'
     },
     hospitalId:{

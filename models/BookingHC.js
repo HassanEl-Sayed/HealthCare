@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 const bookingHCSchema = new mongoose.Schema({
     info: {
         type: Date,
-        default: Date.now
-        // required:true
+        default: Date.now,
+        required:true
     },
     wattingTime: {
         type: String,
@@ -12,17 +12,17 @@ const bookingHCSchema = new mongoose.Schema({
     },
     drAvailTimeId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'DrAvailTime'
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'User'
     },
     paymentId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'Payment'
     }
 })

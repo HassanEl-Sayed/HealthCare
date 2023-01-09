@@ -6,12 +6,12 @@ const jwt = require('jsonwebtoken')
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        //required: true,
+        required: true,
         trim: true
     },
     LastName: {
         type: String,
-        //required: true,
+        required: true,
         trim: true
     },
     birthDate: {
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         length: 11,
-        //required:true,
+        required:true
     },
     diseases: {
         type: String,
@@ -31,16 +31,16 @@ const userSchema = new mongoose.Schema({
     },
     insuranceExpireDate: {
         type: Date,
-        // validate(value) {
-        //     if (value < $currentDate) {
-        //         throw new Error('It is expired')
-        //     }
-        // } 
+        validate(value) {
+            if (value < $currentDate) {
+                throw new Error('It is expired')
+            }
+        } 
     },
     email: {
         type: String,
         unique: true,
-        // required: true,
+        required: true,
         trim: true,
         lowercase: true,
         validate(value) {
@@ -51,14 +51,14 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        // required: true,
-       // minlength: 7,
+        required: true,
+        minlength: 7,
         trim: true,
-        // validate(value) {
-        //     if (value.toLowerCase().includes('password')) {
-        //         throw new Error('Password cannot contain "Password"')
-        //     }
-        // }
+        validate(value) {
+            if (value.toLowerCase().includes('password')) {
+                throw new Error('Password cannot contain "Password"')
+            }
+        }
     },
     avatar:{
         type:String
@@ -72,23 +72,20 @@ const userSchema = new mongoose.Schema({
             required:true
         }
     }],
-     AreaId: {
+    AreaId: {
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'Area'
     },
     InsuranceId: {
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'Insurance'
     },
     genderId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'Gender'
-    },
-    userNumber:{
-        //type:
     }
 },{
     timestamps:true

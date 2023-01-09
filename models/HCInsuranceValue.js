@@ -4,7 +4,7 @@ const HCInsValueSchema = new mongoose.Schema({
     
     Discount: {
         type: Number,
-        // required:true
+        required:true
     },
     hospitalId:{
         type: mongoose.Schema.Types.ObjectId,
@@ -16,12 +16,12 @@ const HCInsValueSchema = new mongoose.Schema({
     },
     specialtiesId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Specialties'
     },
     InsuranceId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Insurance'
     }
 })

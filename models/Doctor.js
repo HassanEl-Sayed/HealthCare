@@ -6,49 +6,44 @@ const jwt = require('jsonwebtoken')
 const DrSchema = new mongoose.Schema({
     firstName: {
         type: String,
-       // required: true,
+       required: true,
         trim: true
     },
     LastName: {
         type: String,
-       // required: true,
+       required: true,
         trim: true
     },
     birthDate: {
         type: Date,
-        // validate(value) {
-        //     if (value < "<2005-1-1>") {
-        //         throw new Error('Age must be greater than 18')
-        //     }
-        // }
     },
     phoneNumber: {
         type: String,
         length: 11,
-      //  required:true,
+       required:true,
     },
     email: {
         type: String,
         unique: true,
-        // required: true,
+        required: true,
         trim: true,
         lowercase: true,
-        // validate(value) {
-        //     if (!validator.isEmail(value)) {
-        //         throw new Error('Email is invalid')
-        //     }
-        // }
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error('Email is invalid')
+            }
+        }
     },
     password: {
         type: String,
-        // required: true,
-       // minlength: 7,
+        required: true,
+       minlength: 7,
         trim: true,
-        // validate(value) {
-        //     if (value.toLowerCase().includes('password')) {
-        //         throw new Error('Password cannot contain "Password"')
-        //     }
-        // }
+        validate(value) {
+            if (value.toLowerCase().includes('password')) {
+                throw new Error('Password cannot contain "Password"')
+            }
+        }
     },
     avatar :{
         type: Buffer
@@ -61,22 +56,22 @@ const DrSchema = new mongoose.Schema({
     }],
     specialtiesId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Specialties'
     },
     titleId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Title'
     },
     genderId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'Gender'
     },
     BranchId:[{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'BranshesHC'
     }],
     avatar:{

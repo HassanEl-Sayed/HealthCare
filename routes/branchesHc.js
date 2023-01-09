@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const BranshesHC = require('../models/BranchesHC');
-const Doctor = require('../models/Doctor');
 const authBranchesHC = require('../middleware/authBranchesHC');
 const multer = require('multer')
 const sharp = require('sharp');
+
 //Add BranshesHC
 router.post('/add', async (req, res) => {
     const branchesHC = new BranshesHC(req.body)
@@ -16,21 +16,21 @@ router.post('/add', async (req, res) => {
     }
 })
 //Update Profile
-// router.patch('/update', authBranchesHC, async (req, res) => {
-//     const updates = Object.keys(req.body)
-//     const allowedUpdates = ['name', 'areaId', 'clinicId', 'email','password']
-//     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-//     if (!isValidOperation) {
-//         return res.status(400).send({ error: 'Invalid updates!' })
-//     }
-//     try {
-//         updates.forEach((update) => req.user[update] = req.body[update])
-//         await req.branchesHC.save()
-//         res.send(req.branchesHC)
-//     } catch (e) {
-//         res.status(400).send(e)
-//     }
-// })
+router.patch('/update', authBranchesHC, async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'areaId', 'clinicId', 'email','password']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+    try {
+        updates.forEach((update) => req.user[update] = req.body[update])
+        await req.branchesHC.save()
+        res.send(req.branchesHC)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 //Login
 router.post('/login',async (req, res) => {
     try {
@@ -58,23 +58,23 @@ router.post('/logout', authBranchesHC, async (req, res) => {
 //get all BranchesHc
 router.get('/', async (req, res) => {
     try {
-       const branchesHC = await BranshesHC.find({})
-         .populate({ path: 'hospitalId', select: 'name', populate: { path: 'specialtiesId', select: 'specialties' } })
-         .populate({ path: 'areaId', select: 'name', populate: { path: 'governorateId', select: 'name' } })
-         .populate({ path: 'clinicId', select: 'name', populate: { path: 'specialtiesId', select: 'specialties' } })
-         .limit(10)
-       const Branch = branchesHC.map(doc=>{
-           return{
-               id:doc._id,
-               Branchename :doc.name,
-               Name: doc.hospitalId || doc.clinicId,
-               Area : doc.areaId,
-            // ClinicName : doc.clinicId,
-               BrancheProfile : '/branchesHC/'+doc._id,
-               image:doc.image
-           }
-      })
-       res.send(Branch)
+        const branchesHC = await BranshesHC.find({})
+        .populate({ path: 'hospitalId', select: 'name', populate: { path: 'specialtiesId', select: 'specialties' } })
+        .populate({ path: 'areaId', select: 'name', populate: { path: 'governorateId', select: 'name' } })
+        .populate({ path: 'clinicId', select: 'name', populate: { path: 'specialtiesId', select: 'specialties' } })
+        .limit(10)
+        const Branch = branchesHC.map(doc=>{
+            return{
+            id:doc._id,
+            Branchename :doc.name,
+            Name: doc.hospitalId || doc.clinicId,
+            Area : doc.areaId,
+            ClinicName : doc.clinicId,
+            BrancheProfile : '/branchesHC/'+doc._id,
+            image:doc.image
+        }
+    })
+        res.send(Branch)
     } catch (error) {
         res.status(404).send(error)
     }
@@ -87,7 +87,7 @@ router.get('/:id', async (req, res) => {
         .populate({ path: 'hospitalId', select: 'name', populate: { path: 'specialtiesId', select: 'specialties' } })
         .populate({ path: 'areaId', select: 'name', populate: { path: 'governorateId', select: 'name' } })
         .populate({ path: 'clinicId', select: 'name', populate: { path: 'specialtiesId', select: 'specialties' } })
-       res.status(200).send(branchesHC)
+        res.status(200).send(branchesHC)
     } catch (e) {
         res.status(500).send(e)
     }

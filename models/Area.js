@@ -4,11 +4,11 @@ const areaSchema = new mongoose.Schema({
 
     name:{
         type : String,
-        // required:true
+        required:true
     },
     governorateId: {
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Governorate'
     }
         

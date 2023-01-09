@@ -8,7 +8,6 @@ router.post('/add', async (req, res) => {
     const xray = new XRay(req.body)
     try {
         await xray.save()
-      //  const token = await xray.generateAuthToken()
         res.status(201).send(xray)
     } catch (e) {
         res.status(400).send(e.message)

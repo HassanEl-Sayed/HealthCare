@@ -3,6 +3,7 @@ var router = express.Router();
 const BookingHC = require('../models/BookingHC')
 const auth = require('../middleware/auth')
 const {sendWelcomeEmail,sendConfirmBooking} = require('../emails/account')
+
 //book an appointment
 router.post('/', auth ,async (req, res) => {
     const Book = new BookingHC({
@@ -15,7 +16,7 @@ router.post('/', auth ,async (req, res) => {
 
     try {
         await Book.save()
-        //sendWelcomeEmail( Book.user.email, Book.user.firstName, Book.drAvailTimeId.branchId.name  )
+        sendWelcomeEmail( Book.user.email, Book.user.firstName, Book.drAvailTimeId.branchId.name  )
         res.status(201).send(Book)
     } catch (e) {
         res.status(400).send(e.message)
@@ -30,11 +31,9 @@ router.get('/all', auth ,async (req, res) => {
         .populate('drAvailTimeId paymentId')
         .populate({path: 'drAvailTimeId', select: 'day timeFrom timeTo vezeeta'})
         .populate({path: 'drAvailTimeId',populate: {path: 'branchId', select: 'name',populate: { path: 'areaId', select: 'name' }}})
-         .populate({path: 'drAvailTimeId',
-         populate: {path: 'branchId', select: 'name',populate:{path: 'hospitalId',selesct : 'name'}}})
-         .populate({path: 'drAvailTimeId',
-         populate: {path: 'branchId', select: 'name',populate:{path: 'clinicId',selesct : 'name'}}})
-         .populate({path: 'drAvailTimeId',populate: {path: 'doctorId', select: 'firstName LastName'}})
+        .populate({path: 'drAvailTimeId',populate: {path: 'branchId', select: 'name',populate:{path: 'hospitalId',selesct : 'name'}}})
+        .populate({path: 'drAvailTimeId',populate: {path: 'branchId', select: 'name',populate:{path: 'clinicId',selesct : 'name'}}})
+        .populate({path: 'drAvailTimeId',populate: {path: 'doctorId', select: 'firstName LastName'}})
        res.send(userbooking)
     } catch (error) {
         res.status(404).send(error)

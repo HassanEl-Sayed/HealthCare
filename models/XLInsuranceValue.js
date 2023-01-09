@@ -4,7 +4,7 @@ const XLInsValueSchema = new mongoose.Schema({
     
     Discount: {
         type: Number,
-        // required:true
+        required:true
     },
     labId:{
         type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +12,7 @@ const XLInsValueSchema = new mongoose.Schema({
     },
     typeId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Types'
     },
     xrayId:{
@@ -21,10 +21,10 @@ const XLInsValueSchema = new mongoose.Schema({
     },
     InsuranceId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Insurance'
     }
 })
 
 const XLInsValue= mongoose.model('XLInsValue' , XLInsValueSchema)
- module.exports = XLInsValue
+module.exports = XLInsValue

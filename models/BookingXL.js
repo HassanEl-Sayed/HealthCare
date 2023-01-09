@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 const bookingXLSchema = new mongoose.Schema({
     info: {
         type: Date,
-        default: Date.now
-        // required:true
+        default: Date.now,
+        required:true
     },
     wattingTime: {
         type: String,
@@ -12,17 +12,17 @@ const bookingXLSchema = new mongoose.Schema({
     },
     xlAvailTimeId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'XLavalibleTime'
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'User'
     },
     paymentId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'Payment'
     }
 })

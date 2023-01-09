@@ -4,7 +4,7 @@ const specialtiesSchema = new mongoose.Schema({
     
     specialties: {
         type: String,
-      //  required : true
+        required : true
     }
 })
 
@@ -14,14 +14,6 @@ specialtiesSchema.virtual('doctors', {
     foreignField: 'specialtiesId'
 })
 
-
-//to delete objects
-// specialtiesSchema.methods.toJSON = function () {
-//     const specialties = this
-//     const specialtiesObject = specialties.toObject()
-//     delete specialtiesObject._id
-//     return specialtiesObject
-// }
 const Specialties = mongoose.model('Specialties', specialtiesSchema)
 
 module.exports = Specialties

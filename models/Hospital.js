@@ -4,19 +4,15 @@ const hospitalSchema = mongoose.Schema({
 
     name : {
         type : String ,
-        // required : true ,
+        required : true ,
     },
-    // FawryId :{
-    //     type : String ,
-    //     //required : true ,
-    // },
     description:{
         type: String,
-       // required: true
+        required: true
     },
     specialtiesId:[{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Specialties'
     }],
 })

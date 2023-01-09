@@ -10,32 +10,13 @@ const sharp = require('sharp');
 const {sendWelcomeEmail,sendConfirmBooking} = require('../emails/account')
 const Gender = require('../models/gender')
 
-//get gender
-router.get('/gender', async (req, res) => {
-    try {
-        const gender = await Gender.find({})
-        res.send(gender)
-    } catch (error) {
-        res.status(404).send(error.message)
-    }
-})
-//add gender
-router.post('/gender', async (req, res) => {
-    const gender = new Gender(req.body)
-    try {
-        await gender.save()
-        res.status(201).send(gender)
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
 
 //SignUp
 router.post('/signUp', async (req, res) => {
     const user = new User(req.body)
     try {
         await user.save()
-        //sendWelcomeEmail(user.email , user.firstName)
+        sendWelcomeEmail(user.email , user.firstName)
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch (e) {
@@ -70,13 +51,13 @@ router.post('/logout', auth, async (req, res) => {
 
 //Profile
 router.get('/userprofile', auth, async (req, res) => {
-await req.user.populate({path:'AreaId', select: 'name' ,populate:{path:'governorateId',select: 'name' }})
-await req.user.populate({path:'InsuranceId' ,select: 'name' ,populate:{path:'insuranceTypeId', select: 'name' }})
-await req.user.populate({ path:'diagnosis', select: '  Diagnosis medicines AnalysisNeeded', populate: { path: 'doctorId', select: 'firstName LastName' } })
-await req.user.populate('genderId')
-res.send(req.user)
-
-
+    await req.user.populate({path:'AreaId', select: 'name' ,populate:{path:'governorateId',select: 'name' }})
+    await req.user.populate({path:'InsuranceId' ,select: 'name' ,populate:{path:'insuranceTypeId', select: 'name' }})
+    await req.user.populate({ path:'diagnosis', select: '  Diagnosis medicines AnalysisNeeded', populate: { path: 'doctorId', select: 'firstName LastName' } })
+    await req.user.populate('genderId')
+    res.send(req.user)
+    
+    
 })
 
 //Update Profile
@@ -183,7 +164,7 @@ router.get('/diagnosis/:id', async (req, res) => {
 router.get('/diagnosis',auth, async (req, res) => {
     try {
         const diagnosis = await Diagnosis.find({userId: req.user._id })
-            .populate({ path: 'doctorId', select: 'firstName LastName' })
+        .populate({ path: 'doctorId', select: 'firstName LastName' })
         res.status(200).send(diagnosis)
     } catch (e) {
         res.status(500).send(e.message)
@@ -194,7 +175,7 @@ router.get('/diagnosis',auth, async (req, res) => {
 router.get('/AnalysisResult/:id', async (req, res) => {
     try {
         const analysisResult = await AnalysisResult.find({ userId: req.params.id })
-            .populate({ path: 'branchId', select: 'name' } )
+        .populate({ path: 'branchId', select: 'name' } )
         res.status(200).send(analysisResult)
     } catch (e) {
         res.status(500).send(e.message)
@@ -204,7 +185,7 @@ router.get('/AnalysisResult/:id', async (req, res) => {
 router.get('/AnalysisResults',auth, async (req, res) => {
     try {
         const analysisResult = await AnalysisResult.find({userId: req.user._id })
-            .populate({ path: 'branchId', select: 'name' })
+        .populate({ path: 'branchId', select: 'name' })
         res.status(200).send(analysisResult)
     } catch (e) {
         res.status(500).send(e.message)
@@ -248,5 +229,24 @@ router.get('/:id/avatar', async (req ,res) =>{
     }
 })
 
+//get gender
+router.get('/gender', async (req, res) => {
+    try {
+        const gender = await Gender.find({})
+        res.send(gender)
+    } catch (error) {
+        res.status(404).send(error.message)
+    }
+})
+//add gender
+router.post('/gender', async (req, res) => {
+    const gender = new Gender(req.body)
+    try {
+        await gender.save()
+        res.status(201).send(gender)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 
 module.exports = router;

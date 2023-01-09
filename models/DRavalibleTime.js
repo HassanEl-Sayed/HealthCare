@@ -3,28 +3,28 @@ const mongoose = require('mongoose')
 const DRavalibleTimeSchema = new mongoose.Schema({
     day: {
        type: String,
-        //required:true
+        required:true
     },
     timeFrom: {
         type: String,
-       // required:true
+       required:true
     },
     timeTo: {
         type: String,
-       // required:true
+       required:true
     },
     vezeeta:{
         type:Number,
-       // require:true
+       require:true
     },
     doctorId: {
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'Doctor'
     },
     branchId: {
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'BranshesHC'
     }
 })

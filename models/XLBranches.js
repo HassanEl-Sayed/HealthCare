@@ -7,12 +7,12 @@ const jwt = require('jsonwebtoken')
 const XLBranchesSchema = new mongoose.Schema({
     name: {
         type: String,
-        // required: true,
+        required: true,
     },
     email: {
         type: String,
         unique: true,
-        // required: true,
+        required: true,
         trim: true,
         lowercase: true,
         validate(value) {
@@ -23,18 +23,18 @@ const XLBranchesSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        // required: true,
-       // minlength: 7,
+        required: true,
+        minlength: 7,
         trim: true,
-        // validate(value) {
-        //     if (value.toLowerCase().includes('password')) {
-        //         throw new Error('Password cannot contain "Password"')
-        //     }
-        // }
+        validate(value) {
+            if (value.toLowerCase().includes('password')) {
+                throw new Error('Password cannot contain "Password"')
+            }
+        }
     },
     areaId: {
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Area'
     },
     labId:{
@@ -53,7 +53,6 @@ const XLBranchesSchema = new mongoose.Schema({
     }],
     types:[{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
         ref: 'Types'
     }],
     image :{
@@ -95,14 +94,6 @@ XLBranchesSchema.methods.generateAuthToken = async function () {
     branchesXL.tokens = branchesXL.tokens.concat({ token })
     await branchesXL.save()
     return token
-}
-//to delete objects
-XLBranchesSchema.methods.toJSON = function () {
-    const branchesXL = this
-    const branchesXLObject = branchesXL.toObject()
-    delete branchesXLObject.password
-    delete branchesXLObject.tokens
-    return branchesXLObject
 }
 
 const BranchesXL = mongoose.model('BranchesXL', XLBranchesSchema)

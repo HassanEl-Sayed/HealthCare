@@ -4,7 +4,7 @@ const paymentMethodSchema = new mongoose.Schema({
    
     methodName: {
         type: String,
-         //required : true 
+         required : true 
     },
 })
 paymentMethodSchema.virtual('payment', {

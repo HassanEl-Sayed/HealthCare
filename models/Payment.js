@@ -3,26 +3,26 @@ const mongoose = require('mongoose')
 const paymentSchema = new mongoose.Schema({
     VisaName: {
         type: String,
-        //required : true 
+        required : true 
     },
     VisaID: {
         type: Number,
-        // visiablilty: false,
-         //required : true 
+        visiablilty: false,
+        required : true 
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'User'
     },
     ExpireDate: {
         type: Date,
     },
-    // PaymentMethodId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'PaymentMethod'
-    //      //required : true 
-    // }
+    PaymentMethodId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PaymentMethod',
+        required : true 
+    }
 })
 
 

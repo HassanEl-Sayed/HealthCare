@@ -12,12 +12,12 @@ const ratingSchema = new mongoose.Schema({
     },
     doctorId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'Doctor'
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        //required: true,
+        required: true,
         ref: 'User'
     },
 

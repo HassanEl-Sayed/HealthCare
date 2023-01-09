@@ -5,20 +5,15 @@ const clinicSchema = mongoose.Schema({
         type : String ,
         required : true ,
     },
-    // fawryId :{
-    //     type : String ,
-    //   //  required : true ,
-    // },
     description:{
         type : String,
-    //    required : true
+        required : true
     },
     specialtiesId:[{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Specialties'
-    }],
-    
+    }]
 })
 clinicSchema.virtual('branches', {
     ref: 'BranshesHC',

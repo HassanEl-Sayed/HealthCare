@@ -123,16 +123,16 @@ router.get('/search/filter', async (req, res) => {
 })
 
 // //filter By [doctors in this area branches].
-// router.get('/searchfilter/doctors/:AreaId', async (req, res) => {
-//     try {
-//         const Hospital= await BranshesHC.find({areaId:req.params.AreaId}).select('id')
-//         const doctor = BranshesHC.findById({ _id: [Hospital]}).populate({path:'doctors'}) 
-//         //db.collection('users').find({email:uEmail, ocassionTypes: {$elemMatch: {occasiontype:uocType}}},{email:1, ocassionTypes: {$elemMatch: {occasiontype:uocType}}})
-//         res.status(200).send(doctor.doctors)
-//     } catch (error) {
-//         res.status(404).send(error)
-//     }
-// })
+router.get('/searchfilter/doctors/:AreaId', async (req, res) => {
+    try {
+        const Hospital= await BranshesHC.find({areaId:req.params.AreaId}).select('id')
+        const doctor = BranshesHC.findById({ _id: [Hospital]}).populate({path:'doctors'}) 
+        //db.collection('users').find({email:uEmail, ocassionTypes: {$elemMatch: {occasiontype:uocType}}},{email:1, ocassionTypes: {$elemMatch: {occasiontype:uocType}}})
+        res.status(200).send(doctor.doctors)
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
 
 
 //Labs and Xray send Analysis Results
@@ -160,6 +160,7 @@ router.post('/analysisResult/add',async (req, res) => {
 //         res.status(500).send(e)
 //     }
 // })
+
 //Search Users
 router.get('/search/users', authBranchesXL ,async (req, res) => {
     try {
