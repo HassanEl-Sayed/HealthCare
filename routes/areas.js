@@ -14,6 +14,7 @@ router.post('/Governorates/addGovernorate', async (req, res) => {
         res.status(400).send(e)
     }
 })
+
 //Add area
 router.post('/Area/addArea', async (req, res) => {
     const area = new Area(req.body)
